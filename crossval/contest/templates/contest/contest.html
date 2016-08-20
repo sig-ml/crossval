@@ -1,1 +1,22 @@
-{% extends 'contest/contest_home.html' %}
+{% extends 'base.html' %}
+{% block body %}
+<h1>{{contest}}</h1>
+    <p>
+    {{contest.scoring}} is the metric used |
+    {{contest.max_submissions_per_day}} submissions per day |
+    {{now |timesince: contest.start_time}} to {{contest.end_time|timeuntil: now}}
+    </p>
+<hr>
+<h3>Terms and Conditions</h3>
+<p>
+{{contest.tos}}
+</p>
+<b>Only continue to take part in the contest if you agree to the Terms and Conditions</b>
+<hr>
+<h3>Resources</h3>
+<ul>
+    {% for resource in resources %}
+        <li><a href={% url 'resource' resource.pk %}>{{resource}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
