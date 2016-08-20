@@ -22,6 +22,7 @@ class Contest(models.Model):
     scoring = models.ForeignKey(ScoreSchemes, related_name='score_schemes_contest')
     tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
     ground_truth = models.FileField()
+    max_submissions_per_day = models.IntegerField(default=50)
 
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
@@ -72,7 +73,6 @@ class Submission(models.Model):
     score = models.FloatField(default=None, null=True)
 
     stamp = models.DateTimeField(auto_now_add=True)
-
 
     def __calculate_score(self):
         #TODO
