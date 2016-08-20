@@ -26,6 +26,7 @@ class Contest(models.Model):
 
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
+    published = models.BooleanField(default=False)
 
     def is_live(self):
         "Is the contest live?"
