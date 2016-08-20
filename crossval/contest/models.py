@@ -5,18 +5,23 @@ from django.contrib.aut.models import User
 now = timezone.now
 
 class ScoreSchemes(models.Model):
-    "Score schemes for cross validation"
+    """
+    Score schemes for cross validation
+    """
     def __str__(self):
         return self.name
     name = models.CharField(max_length=50, default='accuracy')
 
 class Contest(models.Model):
-    "Contest which is hosted"
+    """
+    Contest which is hosted
+    """
     def __str__(self):
         return self.title
     title = models.CharField(max_length=100)
     scoring = models.ForeignKey(ScoreSchemes, related_name='score_schemes_contest')
     tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
+    ground_truth = models.FileField()
 
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
@@ -27,13 +32,13 @@ class Contest(models.Model):
 
 
 class Resource(models.Model):
-    "Data File"
+    """
+    Data Files, mostly csvs
+    """
     def __str__(self):
         return self.csv_file.__str__()
     csv_file = models.FileField()
     contest = models.ForeignKey(Contest, related_name='contest_resource')
-    test_file = models.FileField()
-
     public = models.BooleanField(default=True)
 
     def is_accessible(self, user):
@@ -64,10 +69,11 @@ class Submission(models.Model):
     test_file = models.FileField()
     code_file = models.FileField()
     comment = models.TextField(default='')
+    score = models.FloatField(default=None, null=True)
 
     stamp = models.DateTimeField(auto_now_add=True)
 
-    def score(self):
-        "Score this submission"
+
+    def __calculate_score(self):
         #TODO
         return 0
