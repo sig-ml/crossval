@@ -1,1 +1,20 @@
 {% extends base.html %}
+
+{% block body %}
+<h1>Published contests</h1>
+<table>
+    <thead>
+        <tr><td>Contest</td><td>Starts</td><td>Ends</td><td>Max Submissions Per Day</td><td>Scoring</td></tr>
+    </thead>
+    <tbody>
+    {% for contest in contests %}
+    <tr>
+        <td><a href={% url 'contest' contest.pk%}>{{contest}}</a></td>
+        <td>{{contest.start_time}}</td>
+        <td>{{contest.end_time}}</td>
+        <td>{{contest.max_submissions_per_day}}</td>
+        <td>{{contest.scoring}}</td>
+    </tr>
+    {% endfor %}
+</ul>
+{% endblock %}
