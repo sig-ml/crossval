@@ -21,6 +21,9 @@ def contest(request, pk):
     c['pk'] = c['contest'].pk
     c['resources'] = models.Resource.objects.filter(public=True,
             contest=c['contest'])
+    c['signed_contract'] = False
+    if request.user.is_authenticated():
+        c['signed_contract'] = models.Contract.objects.filter(user=request.user, contest=c['contest']).count() > 0
     return render(request, template, c)
 
 def contest_lb(request, pk):
@@ -75,6 +78,21 @@ def contract(request, pk):
     "Sign the contract"
     c, template, pk = {}, 'contest/contest_contract.html', int(pk)
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
+    c['contract_form'] = forms.ContractForm()
+    if request.method == 'POST':
+        contract_form = forms.ContractForm(request.POST)
+        if contract_form.is_valid():
+            contract = contract_form.save(commit=False)
+            contract.contest = c['contest']
+            contract.user = request.user
+            contract.tos = c['contest'].tos
+            try:
+                contract.save()
+            except:
+                pass
+            return redirect('contest', pk)
+        else:
+            c['contract_form'] = contract_form
     return render(request, template, c)
 
 

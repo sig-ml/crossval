@@ -3,4 +3,9 @@
 {% block body %}
 <h1>Contract</h1>
 <pre> {{contest.tos}} </pre>
+<form action="{% url 'contract' contest.pk %}" method=POST>
+    {% csrf_token %}
+    {{ contract_form.as_p }}
+    <input type='submit' value='Accept and participate'/>
+</form>
 {% endblock %}

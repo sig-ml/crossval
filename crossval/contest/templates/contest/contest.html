@@ -11,9 +11,12 @@
     </ul>
     </p>
 <hr>
-<h2>Terms and Conditions</h2>
-<pre> {{contest.tos}} </pre>
-<b>Only continue to take part in the contest if you agree to the Terms and Conditions</b>
+<h2>Conditions for Participation</h2>
+{% if signed_contract %}
+    You have already accepted to the Terms and Conditions and are participating in this contest
+{% else %}
+    <a href="{% url 'contract' contest.pk %}">Read about them here</a>
+{% endif %}
 <hr>
 <h2>Resources</h2>
 <ul>
