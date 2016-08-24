@@ -2,13 +2,16 @@ from django.contrib import admin
 from contest import models
 
 
+class ResourceInlineAdmin(admin.TabularInline):
+    model = models.Resource
+
 @admin.register(models.ScoreSchemes)
 class ScoreSchemesAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(models.Contest)
 class ContestAdmin(admin.ModelAdmin):
-    pass
+    inlines = [ResourceInlineAdmin]
 
 @admin.register(models.Resource)
 class ResourceAdmin(admin.ModelAdmin):

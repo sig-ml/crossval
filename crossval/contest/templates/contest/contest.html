@@ -2,21 +2,23 @@
 {% block body %}
 <h1>{{contest}}</h1>
     <p>
-    {{contest.scoring}} is the metric used |
-    {{contest.max_submissions_per_day}} submissions per day |
-    {{now |timesince: contest.start_time}} to {{contest.end_time|timeuntil: now}}
+    <ul>
+        <li><b>Metric:</b> {{contest.scoring}}</li>
+        <li><b>Max submission per day:</b> {{contest.max_submissions_per_day}}</li>
+        <li><b>Start time:</b> {{contest.start_time}}</li>
+        <li><b>End time:</b> {{contest.end_time}}</li>
+        <li><b>Time left:</b> {{contest.end_time | timeuntil}}</li>
+    </ul>
     </p>
 <hr>
-<h3>Terms and Conditions</h3>
-<p>
-{{contest.tos}}
-</p>
+<h2>Terms and Conditions</h2>
+<pre> {{contest.tos}} </pre>
 <b>Only continue to take part in the contest if you agree to the Terms and Conditions</b>
 <hr>
-<h3>Resources</h3>
+<h2>Resources</h2>
 <ul>
     {% for resource in resources %}
-        <li><a href={% url 'resource' resource.pk %}>{{resource}}</a></li>
+        <li><a href="{{resource.csv_file.url}}" >{{resource}}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

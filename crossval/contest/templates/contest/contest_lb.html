@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
-<style> tr:nth-child(even) {background: #CCC} </style>
+<style>
+    tr:nth-child(even) {background-color: #f2f2f2}
+    th { background-color: #4CAF50;
+        color: white; }
+    table { border-collapse: collapse; }
+    table, th, td { border: 1px solid black; }
+</style>
+
 <table>
     <thead>
         <tr>
-            <td>Rank</td>
-            <td>NickName</td>
+            <th>Rank</th>
+            <th>NickName</th>
         </tr>
     </thead>
     <tbody>

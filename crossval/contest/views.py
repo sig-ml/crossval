@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from contest import models
+from contest import models, forms
 
 # we follow the convention that 'c' is context in the views
 
@@ -19,7 +19,7 @@ def contest(request, pk):
     c, template, pk = {}, 'contest/contest.html', int(pk)
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
     c['pk'] = c['contest'].pk
-    c['resources'] = models.Resource.filter(public=True,
+    c['resources'] = models.Resource.objects.filter(public=True,
             contest=c['contest'])
     return render(request, template, c)
 
@@ -27,12 +27,12 @@ def contest_lb(request, pk):
     """
     Leaderboard
     """
-    c, template, pk = {}, 'contest/contest.html', int(pk)
+    c, template, pk = {}, 'contest/contest_lb.html', int(pk)
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
     c['pk'] = c['contest'].pk
 
     # rankings
-    contracts = models.Contract.filter(contest=c['contest'])
+    contracts = models.Contract.objects.filter(contest=c['contest'])
     users = [(i.get_score(), i.nick)
               for i in contracts]
     users.sort(reverse=(not c['contest'].scoring.lower_is_better))
@@ -45,10 +45,36 @@ def contest_submit(request, pk):
     """
     Submission page for contest
     """
-    c, template, pk = {}, 'contest/contest.html', int(pk)
+    c, template, pk = {}, 'contest/contest_submit.html', int(pk)
+    print(pk, 'called function')
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
-    c['pk'] = c['contest'].pk
-    # TODO: forms
+    print('obtained and failed contract')
+    contract_exists = models.Contract.objects.filter(contest=c['contest'], user=request.user).count() > 0
+    if contract_exists:
+        print('obtained and failed')
+        contract = get_object_or_404(models.Contract,
+                contest=c['contest'], user=request.user)
+        c['pk'] = c['contest'].pk
+        c['submit_form'] = forms.SubmissionForm()
+        if request.method == 'POST':
+            form = forms.SubmissionForm(request.POST, request.FILES)
+            if form.is_valid():
+                sub = form.save(commit=False)
+                sub.contract = contract
+                sub.save()
+            else:
+                c['submit_form'] = form
+        return render(request, template, c)
+    else:
+        print('Contract not signed')
+        return redirect('contract', pk)
+
+
+@login_required
+def contract(request, pk):
+    "Sign the contract"
+    c, template, pk = {}, 'contest/contest_contract.html', int(pk)
+    c['contest'] = get_object_or_404(models.Contest, pk=pk)
     return render(request, template, c)
 
 
@@ -60,4 +86,3 @@ def contest_resource(request, pk):
     if resource.public and resource.is_contract_signed(request.user):
         pass
         # TODO: complete this Accel-redirect?
-

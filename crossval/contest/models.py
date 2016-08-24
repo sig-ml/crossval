@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.aut.models import User
+from django.contrib.auth.models import User
 
 now = timezone.now
 
@@ -57,8 +57,8 @@ class Contract(models.Model):
     user = models.ForeignKey(User, related_name='user_contract')
     contest = models.ForeignKey(Contest, related_name='contest_contract')
     tos = models.TextField(default='')  # Terms of service
-    nick = models.CharField()  #TODO: can clash with other users in the contest
-    __last_submission_stamp = models.DateTimeField(default=now)
+    nick = models.CharField(max_length=50)  #TODO: can clash with other users in the contest
+    _last_submission_stamp = models.DateTimeField(default=now)
     public_max_score = models.FloatField(default=0.0)
 
     stamp = models.DateTimeField(auto_now_add=True)
