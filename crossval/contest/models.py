@@ -73,7 +73,7 @@ class Contract(models.Model):
 class Submission(models.Model):
     "A user's submission"
     def __str__(self):
-        return '{}_{}_{}'.format(self.pk, self.user, self.contest)
+        return '{}_{}'.format(self.pk, self.contract)
     contract = models.ForeignKey(Contract, related_name='contract_submission')
     test_file = models.FileField(upload_to='submission/csv/')
     code_file = models.FileField(upload_to='submission/code/')

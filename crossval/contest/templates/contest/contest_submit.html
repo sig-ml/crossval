@@ -1,1 +1,25 @@
 {% extends 'contest/contest_home.html' %}
+{% block body %}
+<h1>Submission Form</h1>
+<form action="{% url 'contest_submit' pk %}" method=POST enctype="multipart/form-data" >
+    {% csrf_token %}
+    {{submit_form.as_p}}
+    <input type='submit' value='Submit'/>
+</form>
+<hr>
+<h1>Past submissions</h1>
+<table>
+    <thead>
+        <tr><th>Stamp</th><th>Comment</th><th>Score</th></tr>
+    </thead>
+    <tbody>
+        {% for sub in past_submissions %}
+        <tr>
+            <td>{{sub.stamp}}</td>
+            <td>{{sub.comment}}</td>
+            <td>{{sub.score}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+{% endblock %}

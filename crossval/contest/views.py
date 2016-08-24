@@ -49,14 +49,13 @@ def contest_submit(request, pk):
     Submission page for contest
     """
     c, template, pk = {}, 'contest/contest_submit.html', int(pk)
-    print(pk, 'called function')
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
-    print('obtained and failed contract')
     contract_exists = models.Contract.objects.filter(contest=c['contest'], user=request.user).count() > 0
+
     if contract_exists:
-        print('obtained and failed')
         contract = get_object_or_404(models.Contract,
                 contest=c['contest'], user=request.user)
+        c['past_submissions'] = models.Submission.objects.filter(contract=contract).order_by('-stamp')
         c['pk'] = c['contest'].pk
         c['submit_form'] = forms.SubmissionForm()
         if request.method == 'POST':
@@ -69,7 +68,6 @@ def contest_submit(request, pk):
                 c['submit_form'] = form
         return render(request, template, c)
     else:
-        print('Contract not signed')
         return redirect('contract', pk)
 
 
