@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CrossVal-{% block title%}{% end block %}</title>
+        <title>CrossVal-{% block title%}{% endblock %}</title>
     </head>
     <body>
         <nav style='background: #E9C4FF;'>
             <a href="{% url 'contest_home' %}">[--AllContests--]</a>
-            <a href="{% url 'contest_lb', pk %}">[--Leaderboard--]</a>
-            <a href="{% url 'contest_submit' pk%}">[--Make Submission--]</a>
-            <a href="{% url 'contest' pk%}">[--{{contest.title}}--]</a>
+            {% if pk %}
+                <a href="{% url 'contest_lb' pk %}">[--Leaderboard--]</a>
+                <a href="{% url 'contest_submit' pk%}">[--Make Submission--]</a>
+                <a href="{% url 'contest' pk%}">[--{{contest.title}}--]</a>
+            {% else %}
+                <strike><a href="#">[--Leaderboard--]</a></strike>
+                <strike><a href="#">[--Make Submission--]</a></strike>
+                <strike><a href="#">[--(contest name comes here)--]</a></strike>
+            {% endif %}
         </nav>
-        <hr>
         {% block body %}
         {% endblock %}
     </body>
