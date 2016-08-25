@@ -38,7 +38,7 @@ def contest_lb(request, pk):
     contracts = models.Contract.objects.filter(contest=c['contest'])
     users = [(i.get_score(), i.nick)
               for i in contracts]
-    users.sort(reverse=(not c['contest'].scoring.lower_is_better))
+    users.sort(reverse=(not c['contest'].reverse_lb))
     c['players'] = [player[1] for player in users]
 
     return render(request, template, c)

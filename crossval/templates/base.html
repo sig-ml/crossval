@@ -3,32 +3,35 @@
     <head>
         <title>CrossVal-{% block title%}{% endblock %}</title>
         <style>
+            a {color: black;}
+            nav {background: #4CAF50; padding: 2px;}
+            nav a {border-radius: 9px; background: white; padding: 2px; text-decoration: none;}
             pre {background: #E8C0B3;}
             tr:nth-child(even) {background-color: #f2f2f2}
             th { background-color: #4CAF50;
                 color: white; }
-            table { border-collapse: collapse; }
-            table, th, td { border: 1px solid black; }
+            table { border-collapse: collapse; margin: 2px; padding: 5px;}
+            table, th, td { border: 1px solid black; margin: 5px; padding: 5px;}
             body {font: 17px/25px 'Merriweather', serif;
                 margin: 0; padding: 0; font-weight: 400; color: black;}
         </style>
     </head>
     <body>
-        <nav style='background: #E9C4FF;'>
+        <nav>
             {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Logout {{user}}</a> | 
             {% else %}
             <a href="{% url 'login' %}">Login</a> | 
             {% endif %}
-            <a href="{% url 'contest_home' %}">[--AllContests--]</a>
+            <a href="{% url 'contest_home' %}">AllContests</a>
             {% if pk %}
-                <a href="{% url 'contest_lb' pk %}">[--Leaderboard--]</a>
-                <a href="{% url 'contest_submit' pk%}">[--Make Submission--]</a>
-                <a href="{% url 'contest' pk%}">[--{{contest.title}}--]</a>
+                <a href="{% url 'contest_lb' pk %}">Leaderboard</a>
+                <a href="{% url 'contest_submit' pk%}">Make Submission</a>
+                <a href="{% url 'contest' pk%}">{{contest.title}}</a>
             {% else %}
-                <strike><a href="#">[--Leaderboard--]</a></strike>
-                <strike><a href="#">[--Make Submission--]</a></strike>
-                <strike><a href="#">[--(contest name comes here)--]</a></strike>
+                <strike><a href="#">Leaderboard</a></strike>
+                <strike><a href="#">Make Submission</a></strike>
+                <strike><a href="#">(contest name comes here)</a></strike>
             {% endif %}
         </nav>
         {% block body %}

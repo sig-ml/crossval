@@ -17,6 +17,8 @@ class Contest(models.Model):
     tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
     ground_truth = models.FileField(upload_to='ground_truth/')
     max_submissions_per_day = models.IntegerField(default=50)
+    metric = models.CharField(default='accuracy', max_length=50)
+    reverse_lb = models.BooleanField(default=True, help_text='Leaderboard must be sorted highest metric first?')
 
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
