@@ -1,7 +1,24 @@
 CrossValidation Platform
 ========================
 
-Hold local Machine Learning contests in a kaggle like format.
+Hold local Machine Learning contests in a kaggle `like` format.  
+
+How it works
+------------
+
+- participants create accounts
+- participants login
+- participants navigate to the `/contests` link and see the list of available contests.
+- participants click on the contest they wish to participate in
+- partici.. ok. They sign contract
+- download resources
+- run computations on their machines
+- create a submission file
+- upload to website via `submit` option
+- Get a score on their answers.
+ 
+
+Leaderboard displays rankings and scores.
 
 
 Installation
