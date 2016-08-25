@@ -11,7 +11,7 @@
 <h1>Published contests</h1>
 <table>
     <thead>
-        <tr><th>Contest</th><th>Starts</th><th>Ends</th><th>Max Submissions Per Day</th><th>Scoring</th></tr>
+        <tr><th>Contest</th><th>Starts</th><th>Ends</th><th>Max Submissions Per Day</th></tr>
     </thead>
     <tbody>
     {% for contest in contests %}
@@ -20,7 +20,6 @@
         <td>{{contest.start_time}}</td>
         <td>{{contest.end_time}}</td>
         <td>{{contest.max_submissions_per_day}}</td>
-        <td>{{contest.scoring}}</td>
     </tr>
     {% endfor %}
 </ul>

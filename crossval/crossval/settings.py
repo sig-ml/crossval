@@ -124,3 +124,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_serve', 'staticroot')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static_serve', 'mediaroot')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/contest/'
