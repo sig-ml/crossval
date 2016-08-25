@@ -1,3 +1,6 @@
+import pandas as pd
+from sklearn import metrics
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -28,6 +31,9 @@ class Contest(models.Model):
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
     published = models.BooleanField(default=False)
+
+    check_script = models.TextField(default='#given_path, ground_path, score=None are variables available',
+                    help_text='script to check and set the score variable to an appropriate value')
 
     def is_live(self):
         "Is the contest live?"
@@ -83,14 +89,15 @@ class Submission(models.Model):
 
     stamp = models.DateTimeField(auto_now_add=True)
 
-    def __check_valid(self):
-        pass
+    def calculate_score(self):
+        "Calculate the score of the given submission -> if score was calculated, score"
+        given_path = self.test_file.path
+        ground_path = self.contract.contest.ground_truth.path
+        check_script = self.contract.contest.check_script
+        score = None
 
-    def __check_public_score(self):
-        pass
+        exec(check_script)  # this script is supposed to set the score value
 
-    def __check_private_score(self):
-        #TODO
-        # check if valid
-        # calculate score
-        return 0
+        self.score = score
+        self.save()
+        return score
