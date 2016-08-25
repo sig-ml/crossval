@@ -91,13 +91,23 @@ class Submission(models.Model):
 
     def calculate_score(self):
         "Calculate the score of the given submission -> if score was calculated, score"
-        given_path = self.test_file.path
-        ground_path = self.contract.contest.ground_truth.path
         check_script = self.contract.contest.check_script
-        score = None
 
-        exec(check_script)  # this script is supposed to set the score value
-
-        self.score = score
-        self.save()
+        global_dict = {'pd': globals()['pd'],
+                'metrics': globals()['metrics'],
+                'given_path': self.test_file.path,
+                'ground_path': self.contract.contest.ground_truth.path
+                }
+        local_dict = {}
+        try:
+            exec(check_script, global_dict, local_dict)  # this script is supposed to set the score value
+        except:
+            score = None
+        else:
+            if 'score' in global_dict.keys():
+                score = global_dict['score']
+            elif 'score' in local_dict.keys():
+                score = local_dict['score']
+            self.score = score
+            self.save()
         return score

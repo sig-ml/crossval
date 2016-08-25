@@ -64,6 +64,7 @@ def contest_submit(request, pk):
                 sub = form.save(commit=False)
                 sub.contract = contract
                 sub.save()
+                sub.calculate_score()
             else:
                 c['submit_form'] = form
         return render(request, template, c)
