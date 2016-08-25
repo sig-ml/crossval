@@ -7,15 +7,6 @@ from django.contrib.auth.models import User
 
 now = timezone.now
 
-class ScoreSchemes(models.Model):
-    """
-    Score schemes for cross validation
-    """
-    def __str__(self):
-        return self.name
-    name = models.CharField(max_length=50, default='accuracy')
-    lower_is_better = models.BooleanField(default=True, help_text='Is a lower score better')
-
 class Contest(models.Model):
     """
     Contest which is hosted
@@ -23,7 +14,6 @@ class Contest(models.Model):
     def __str__(self):
         return self.title
     title = models.CharField(max_length=100)
-    scoring = models.ForeignKey(ScoreSchemes, related_name='score_schemes_contest')
     tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
     ground_truth = models.FileField(upload_to='ground_truth/')
     max_submissions_per_day = models.IntegerField(default=50)
@@ -32,7 +22,7 @@ class Contest(models.Model):
     end_time = models.DateTimeField(default=now)
     published = models.BooleanField(default=False)
 
-    check_script = models.TextField(default='#given_path, ground_path, score=None are variables available',
+    check_script = models.TextField(default='#given_path, ground_path, pandas as pd, metrics, are variables available',
                     help_text='script to check and set the score variable to an appropriate value')
 
     def is_live(self):

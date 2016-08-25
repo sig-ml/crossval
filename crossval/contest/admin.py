@@ -5,10 +5,6 @@ from contest import models
 class ResourceInlineAdmin(admin.TabularInline):
     model = models.Resource
 
-@admin.register(models.ScoreSchemes)
-class ScoreSchemesAdmin(admin.ModelAdmin):
-    pass
-
 @admin.register(models.Contest)
 class ContestAdmin(admin.ModelAdmin):
     inlines = [ResourceInlineAdmin]
