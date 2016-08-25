@@ -34,3 +34,12 @@ TODO
 ----
 
 - cleaning and validating the submissions before running scoring
+- Public Private lb split
+
+
+Screenshots
+-----------
+
+![all contests](screenshots/all_contests.png)
+![login screen](screenshots/login.png)
+![submission screen](screenshots/submission.png)

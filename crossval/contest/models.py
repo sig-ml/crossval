@@ -73,9 +73,9 @@ class Submission(models.Model):
     def __str__(self):
         return '{}_{}'.format(self.pk, self.contract)
     contract = models.ForeignKey(Contract, related_name='contract_submission')
-    test_file = models.FileField(upload_to='submission/csv/')
-    code_file = models.FileField(upload_to='submission/code/')
-    comment = models.TextField(default='')
+    test_file = models.FileField(upload_to='submission/csv/', help_text='the submission csv file')
+    code_file = models.FileField(upload_to='submission/code/', help_text='The program used to generate the file')
+    comment = models.TextField(default='', help_text='Write something to help you remember later on what you did')
     score = models.FloatField(default=None, null=True)
     valid = models.BooleanField(default=False)
 
