@@ -50,13 +50,14 @@ Please do so!
 TODO
 ----
 
-- cleaning and validating the submissions before running scoring
-- Public Private lb split
-- Submission limit must be counted in today's date
+- [ ] Cleaning and validating the submissions before running scoring
+- [ ] Public Private lb split
+- [ ] Submission limit must be counted in today's date
 
 
 Screenshots
 -----------
+These change on a regular basis.
 
 ![all contests](screenshots/all_contests.png)
 ![login screen](screenshots/login.png)
