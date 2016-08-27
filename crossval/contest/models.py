@@ -99,6 +99,7 @@ class Submission(models.Model):
                 score = local_dict['score']
             self.score = score
             self.save()
-            self.contract.public_max_score = score
-            self.contract.save()
+            if self.contract.public_max_score < score:
+                self.contract.public_max_score = score
+                self.contract.save()
         return score
