@@ -18,7 +18,7 @@ class Contest(models.Model):
     ground_truth = models.FileField(upload_to='ground_truth/')
     max_submissions_per_day = models.IntegerField(default=50)
     metric = models.CharField(default='accuracy', max_length=50)
-    reverse_lb = models.BooleanField(default=True, help_text='Leaderboard must be sorted highest metric first?')
+    reverse_lb = models.BooleanField(default=True, help_text='Leaderboard must be sorted lowest metric first?')
 
     start_time = models.DateTimeField(default=now)
     end_time = models.DateTimeField(default=now)
@@ -64,9 +64,6 @@ class Contract(models.Model):
     class Meta:
         unique_together = ('user', 'contest')
 
-    def get_score(self):
-        last_sub = Submission.objects.filter(valid=True)
-
 
 class Submission(models.Model):
     "A user's submission"
@@ -102,4 +99,6 @@ class Submission(models.Model):
                 score = local_dict['score']
             self.score = score
             self.save()
+            self.contract.public_max_score = score
+            self.contract.save()
         return score

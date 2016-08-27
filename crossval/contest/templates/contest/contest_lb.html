@@ -5,13 +5,15 @@
         <tr>
             <th>Rank</th>
             <th>NickName</th>
+            <th>Score</th>
         </tr>
     </thead>
     <tbody>
         {% for player in players %}
         <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{player}}</td>
+                <td>{{player.1}}</td>
+                <td>{{player.0}}</td>
             </tr>
         {% endfor %}
     </tbody>
