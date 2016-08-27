@@ -20,4 +20,4 @@ class ContractAdmin(admin.ModelAdmin):
 
 @admin.register(models.Submission)
 class SubmisisonAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('contract', 'valid')

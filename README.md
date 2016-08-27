@@ -52,6 +52,7 @@ TODO
 
 - cleaning and validating the submissions before running scoring
 - Public Private lb split
+- Submission limit must be counted in today's date
 
 
 Screenshots

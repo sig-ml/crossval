@@ -1,11 +1,15 @@
 {% extends 'contest/contest_home.html' %}
 {% block body %}
 <h1>Submission Form</h1>
-<form action="{% url 'contest_submit' pk %}" method=POST enctype="multipart/form-data" >
-    {% csrf_token %}
-    {{submit_form.as_p}}
-    <input type='submit' value='Submit'/>
-</form>
+{% if sub_limit_reached %}
+    <p>You have reached your submission limit for the day.</p>
+{% else %}
+    <form action="{% url 'contest_submit' pk %}" method=POST enctype="multipart/form-data" >
+        {% csrf_token %}
+        {{submit_form.as_p}}
+        <input type='submit' value='Submit'/>
+    </form>
+{% endif %}
 <hr>
 <h1>Past submissions</h1>
 <table>

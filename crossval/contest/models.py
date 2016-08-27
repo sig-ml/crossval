@@ -16,7 +16,7 @@ class Contest(models.Model):
     title = models.CharField(max_length=100)
     tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
     ground_truth = models.FileField(upload_to='ground_truth/')
-    max_submissions_per_day = models.IntegerField(default=50)
+    max_submissions_per_day = models.IntegerField(default=-1, help_text='how many submissions per day? -1 = inf')
     metric = models.CharField(default='accuracy', max_length=50)
     reverse_lb = models.BooleanField(default=True, help_text='Leaderboard must be sorted lowest metric first?')
 
@@ -98,6 +98,7 @@ class Submission(models.Model):
             elif 'score' in local_dict.keys():
                 score = local_dict['score']
             self.score = score
+            self.valid=True
             self.save()
             if self.contract.public_max_score < score:
                 self.contract.public_max_score = score

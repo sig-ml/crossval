@@ -58,7 +58,19 @@ def contest_submit(request, pk):
         c['past_submissions'] = models.Submission.objects.filter(contract=contract).order_by('-stamp')
         c['pk'] = c['contest'].pk
         c['submit_form'] = forms.SubmissionForm()
-        if request.method == 'POST':
+
+        sub_limit = c['contest'].max_submissions_per_day
+        c['sub_limit_reached'] = False
+        if sub_limit != -1:
+            # TODO: submissions must be counted in today's date
+            sub_done = models.Submission.objects.filter(contract=contract, valid=True).count()
+            print(sub_limit, '*'*10)
+            if sub_done >= sub_limit:
+                c['submit_form'] = None
+                c['sub_limit_reached'] = True
+
+
+        if request.method == 'POST' and not c['sub_limit_reached']:
             form = forms.SubmissionForm(request.POST, request.FILES)
             if form.is_valid():
                 sub = form.save(commit=False)
