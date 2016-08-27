@@ -14,7 +14,8 @@ class Contest(models.Model):
     def __str__(self):
         return self.title
     title = models.CharField(max_length=100)
-    tos = models.TextField(default='Do what you want after permission from the hosts of the contest.')
+    tos = models.TextField(default='Do what you want after permission from the hosts of the contest.',
+            help_text='Instuctions to participants, data licence etc')
     ground_truth = models.FileField(upload_to='ground_truth/')
     max_submissions_per_day = models.IntegerField(default=-1, help_text='how many submissions per day? -1 = inf')
     metric = models.CharField(default='accuracy', max_length=50)
