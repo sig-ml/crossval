@@ -24,7 +24,8 @@ Leaderboard displays rankings and scores.
 Installation
 ------------
 
-`setup.sh` should do most of the things
+1. `setup.sh` will install all the prerequisites.
+2. `serve.sh` will start serving the development server. This is not recommended for actual use.
 
 Usage
 -----
