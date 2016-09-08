@@ -54,6 +54,10 @@ TODO
 - [ ] Cleaning and validating the submissions before running scoring
 - [ ] Public Private lb split
 - [ ] Submission limit must be counted in today's date
+- [ ] UI change
+- [ ] Systems Hardening
+- [ ] Splitting the code check and web server code
+
 
 
 Screenshots

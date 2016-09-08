@@ -3,9 +3,8 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-if source ./env/bin/activate; then
+if source env/bin/activate; then
     echo -e "$RED Virtualenv Found.$NC"
-    virtualenv -p python3 env
     source env/bin/activate
 else
     echo -e "$RED Virtualenv Not Found. $NC Please run setup.sh or report this on github"
