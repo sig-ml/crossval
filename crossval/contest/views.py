@@ -50,7 +50,7 @@ def contest_submit(request, pk):
     """
     c, template, pk = {}, 'contest/contest_submit.html', int(pk)
     c['contest'] = get_object_or_404(models.Contest, pk=pk)
-    contract_exists = models.Contract.objects.filter(contest=c['contest'], user=request.user).count() > 0
+    contract_exists = models.Contract.objects.filter(contest=c['contest'], user=request.user).count() == 1
 
     if contract_exists:
         contract = get_object_or_404(models.Contract,
