@@ -6,7 +6,12 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 now = timezone.now
-
+default_script = '''
+#given_path, ground_path, pandas as pd, metrics, are variables available
+given, ground = pd.read_csv(given_path), pd.read_csv(ground_path)
+global score
+score = metrics.accuracy(ground, given)
+'''
 class Contest(models.Model):
     """
     Contest which is hosted
@@ -25,7 +30,7 @@ class Contest(models.Model):
     end_time = models.DateTimeField(default=now)
     published = models.BooleanField(default=False)
 
-    check_script = models.TextField(default='#given_path, ground_path, pandas as pd, metrics, are variables available',
+    check_script = models.TextField(default=default_script,
                     help_text='script to check and set the score variable to an appropriate value')
 
     def is_live(self):
