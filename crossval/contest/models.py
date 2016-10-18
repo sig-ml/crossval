@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn import metrics
 
 from django.db import models
 from django.utils import timezone
@@ -7,10 +6,12 @@ from django.contrib.auth.models import User
 
 now = timezone.now
 default_script = '''
-#given_path, ground_path, pandas as pd, metrics, are variables available
+#given_path, ground_path, pandas as pd,  are variables available
 given, ground = pd.read_csv(given_path), pd.read_csv(ground_path)
 global score
-score = metrics.accuracy(ground, given)
+# TODO
+acc = sum((i == j) for i, j in zip(ground, pred)) / len(ground)
+score = acc
 '''
 class Contest(models.Model):
     """
@@ -89,7 +90,6 @@ class Submission(models.Model):
         check_script = self.contract.contest.check_script
 
         global_dict = {'pd': globals()['pd'],
-                'metrics': globals()['metrics'],
                 'given_path': self.test_file.path,
                 'ground_path': self.contract.contest.ground_truth.path
                 }
