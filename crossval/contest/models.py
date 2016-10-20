@@ -10,8 +10,11 @@ default_script = '''
 given, ground = pd.read_csv(given_path), pd.read_csv(ground_path)
 global score
 # TODO
-acc = sum((i == j) for i, j in zip(ground, pred)) / len(ground)
-score = acc
+if given.shape != ground.shape:
+    score = None
+else:
+    acc = sum((i == j) for i, j in zip(ground, given)) / len(ground)
+    score = acc
 '''
 class Contest(models.Model):
     """
@@ -96,8 +99,9 @@ class Submission(models.Model):
         local_dict = {}
         try:
             exec(check_script, global_dict, local_dict)  # this script is supposed to set the score value
-        except:
+        except Exception as e:
             score = None
+            raise e
         else:
             if 'score' in global_dict.keys():
                 score = global_dict['score']

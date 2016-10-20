@@ -28,7 +28,7 @@ python manage.py makemigrations
 echo -e "$RED Creating new database.$NC"
 python manage.py migrate
 echo -e "$RED Collecting static files.$NC"
-mkdir crossval/staticfiles
+mkdir crossval/static_serve
 python manage.py collectstatic --noinput
 echo -e "$RED Set up a superuser. $NC"
 python manage.py createsuperuser
